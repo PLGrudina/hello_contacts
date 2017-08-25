@@ -3,6 +3,7 @@ package services;
 import dao.ContactDao;
 import models.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
