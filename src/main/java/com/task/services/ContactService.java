@@ -52,7 +52,7 @@ public class ContactService {
             }
             reader.close();
         } catch (IOException ex) {
-              ex.getMessage();
+            ex.getMessage();
         }
     }
 }

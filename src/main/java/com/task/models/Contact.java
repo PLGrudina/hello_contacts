@@ -1,13 +1,14 @@
 package com.task.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by PavelGrudina on 25.08.2017.
  */
 @Entity
 @Table(name = "contacts")
-public class Contact {
+public class Contact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +17,7 @@ public class Contact {
 
     private String name;
 
-    public Contact (){
+    public Contact() {
 
     }
 

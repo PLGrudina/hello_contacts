@@ -23,6 +23,7 @@ public class MainController {
         return nameFilter;
     }
 
+
     @RequestMapping(value = "/hello/contacts/all", method = RequestMethod.GET)
     List<Contact> getAll() {
         contactService.initDb();
