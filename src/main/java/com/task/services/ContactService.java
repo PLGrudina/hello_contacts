@@ -26,11 +26,6 @@ public class ContactService {
     @Autowired
     ContactDao contactDao;
 
-    public ContactService(ContactDao contactDao) {
-        this.contactDao = contactDao;
-    }
-
-
     public Contact save(Contact contact) {
         return contactDao.save(contact);
     }
