@@ -2,15 +2,20 @@ package com.task.services;
 
 import com.task.dao.ContactDao;
 import com.task.models.Contact;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import static com.task.controllers.MainController.contactCache;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by PavelGrudina on 25.08.2017.
@@ -18,7 +23,8 @@ import java.util.List;
 @Service
 public class ContactService {
 
-    private final ContactDao contactDao;
+    @Autowired
+    ContactDao contactDao;
 
     public ContactService(ContactDao contactDao) {
         this.contactDao = contactDao;
@@ -26,29 +32,23 @@ public class ContactService {
 
 
     public Contact save(Contact contact) {
-        contactDao.save(contact);
-        return contact;
+        return contactDao.save(contact);
     }
 
     public List<Contact> findAll() {
 
-        List<Contact> allContacts = new ArrayList<>();
-        allContacts.addAll((Collection<? extends Contact>) contactDao.findAll());
-
-        return allContacts;
+        return StreamSupport.stream(contactDao.findAll().spliterator(), false).collect(toList());
     }
 
-    public void initDb() throws IOException {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(new FileInputStream("src/main/resources/db_init_data.txt")));
+    @PostConstruct
+    public void initDb() {
 
-            String str;
-
-            while ((str = reader.readLine()) != null) {
-                Contact contact = new Contact();
-                contact.setName(str);
-                save(contact);
-            }
-            reader.close();
+        try (Stream<String> stream = Files.lines(Paths.get("src/main/resources/db_init_data.txt"))) {
+            stream.forEach(name -> save(new Contact(name)));
+            contactCache.addAll(findAll());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

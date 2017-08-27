@@ -1,15 +1,18 @@
 import com.task.controllers.MainController;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * Created by PavelGrudina on 27.08.2017.
  */
+@RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 public class MainControllerTest {
 
-    @Autowired
+    @Mock
     MainController controller;
 
     @Test
