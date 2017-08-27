@@ -37,10 +37,8 @@ public class ContactService {
 
     @PostConstruct
     public void initDb() {
-
         try (Stream<String> stream = Files.lines(Paths.get("src/main/resources/db_init_data.txt"))) {
             stream.forEach(name -> save(new Contact(name)));
-            contactCache.addAll(findAll());
         } catch (IOException e) {
             e.printStackTrace();
         }

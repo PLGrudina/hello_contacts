@@ -3,6 +3,7 @@ package com.task.controllers;
 import com.task.models.Contact;
 import com.task.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,10 +52,16 @@ public class MainController extends BaseController {
     }
 
 
-    public boolean doNameFilter(String name, String nameFilter) {
+    private boolean doNameFilter(String name, String nameFilter) {
         Pattern p = Pattern.compile(nameFilter);
         Matcher m = p.matcher(name);
         return m.matches();
+    }
+
+    @PostConstruct
+    @DependsOn(value = "ContactService")
+    public void initCache() {
+        contactCache.addAll(contactService.findAll());
     }
 
 }

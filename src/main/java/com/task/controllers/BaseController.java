@@ -16,4 +16,10 @@ public abstract class BaseController {
     public String handleException(IllegalArgumentException exception) {
         return exception.getMessage();
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public String handleException(NullPointerException exception) {
+        return "Set parameter nameFilter";
+    }
 }
