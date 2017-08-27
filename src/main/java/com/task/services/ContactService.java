@@ -38,8 +38,7 @@ public class ContactService {
         return allContacts;
     }
 
-    public void initDb() {
-        try {
+    public void initDb() throws IOException {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(new FileInputStream("src/main/resources/db_init_data.txt")));
 
@@ -51,8 +50,5 @@ public class ContactService {
                 save(contact);
             }
             reader.close();
-        } catch (IOException ex) {
-            ex.getMessage();
-        }
     }
 }
