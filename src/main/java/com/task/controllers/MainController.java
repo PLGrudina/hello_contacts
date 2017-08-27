@@ -47,13 +47,13 @@ public class MainController extends BaseController {
         nameList.addAll(contactCache);
         nameList.removeAll(filteredNames);
 
-        return new ResponseEntity<List<Contact>>(nameList, HttpStatus.OK);
+        return new ResponseEntity<>(nameList, HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/hello/contacts/all", method = RequestMethod.GET)
     ResponseEntity<List<Contact>> getAll() {
-        return new ResponseEntity<List<Contact>>(contactCache, HttpStatus.OK);
+        return new ResponseEntity<>(contactCache, HttpStatus.OK);
     }
 
 

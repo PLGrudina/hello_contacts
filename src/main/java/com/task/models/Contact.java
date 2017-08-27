@@ -21,6 +21,10 @@ public class Contact implements Serializable {
 
     }
 
+    public Contact(String name) {
+        this.name = name;
+    }
+
 
     public long getId() {
         return id;
@@ -36,5 +40,20 @@ public class Contact implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        return getName().equals(contact.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
     }
 }
